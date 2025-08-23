@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function Drawer({chats}) {
+export default function Drawer({chats, setChats}) {
   const [isOpen, setIsOpen] = useState(true);
   const drawerRef = useRef(null);
 
@@ -54,7 +54,9 @@ export default function Drawer({chats}) {
                     <h1 className="text-2xl font-bold text-yellow-700 ml-15 ">Chat AI</h1>
                 </div>
 
-                <button className="w-full bg-yellow-400 text-white py-2 px-3 rounded-xl mb-4 hover:bg-yellow-600 transition">
+                <button className="w-full bg-yellow-400 text-white py-2 px-3 rounded-xl mb-4 hover:bg-yellow-600 transition" 
+                  onClick={()=> setChats([])}
+                >
                     New Chat
                 </button>
 
