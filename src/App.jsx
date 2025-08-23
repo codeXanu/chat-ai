@@ -3,6 +3,7 @@ import { FiSearch, FiPaperclip, FiSend } from "react-icons/fi";
 import Drawer from "./components/Drawer";
 import CTASection from "./components/CTASection";
 import ChatSection from "./components/ChatSection";
+import ModelSelector from "./components/ModelSelector";
 import './App.css'
 
 function App() {
@@ -23,6 +24,11 @@ function App() {
     setInput("");
   };
 
+  // for selecting model
+
+  const handleModelChange = ({ provider, model }) => {
+    console.log("Selected:", provider, model);
+  };
 
   const [oldChats] = useState({
     yesterday: ["Bhub", "Rs in strawberry"],
@@ -50,13 +56,8 @@ function App() {
           className="flex-1 bg-transparent focus:outline-none px-2"
         />
         <div className="flex items-center gap-3 text-yellow-800">
-          <select className="bg-yellow-200 px-2 py-1 rounded-lg">
-            <option>Gemini 2.5 Flash</option>
-            <option>GPT-4</option>
-            <option>Mistral</option>
-          </select>
-          <FiSearch size={18} />
-          <FiPaperclip size={18} />
+          <ModelSelector onChange={handleModelChange} />
+          
           <button
             onClick={handleSend}
             className="bg-yellow-500 text-white p-2 rounded-xl hover:bg-yellow-600"
