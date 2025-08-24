@@ -73,14 +73,14 @@ export default function Drawer({chats, setChats}) {
                     Yesterday
                     </p>
                     <ul className="mb-4 space-y-1">
-                    {chats.yesterday.map((c, i) => (
-                        <li key={i} className="cursor-pointer hover:text-yellow-900">
-                        {c}
+                    {chats.map((chat, index) => (
+                        <li key={index} className="cursor-pointer hover:text-yellow-900">
+                          <strong>{chat.role === "user" ? "User" : "AI"}:</strong> {chat.content}
                         </li>
-                    ))}
+                      ))}
                     </ul>
 
-                    <p className="text-sm font-semibold text-yellow-800 mb-2">
+                    {/* <p className="text-sm font-semibold text-yellow-800 mb-2">
                     Last 7 Days
                     </p>
                     <ul className="space-y-1">
@@ -89,7 +89,7 @@ export default function Drawer({chats, setChats}) {
                         {c}
                         </li>
                     ))}
-                    </ul>
+                    </ul> */}
                 </div>
             </div>
 
