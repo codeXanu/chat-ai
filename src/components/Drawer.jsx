@@ -68,7 +68,7 @@ export default function Drawer({chats, setChats}) {
                     />
                 </div>
 
-                <div>
+                  <div className=" overflow-y-auto max-h-[60vh] custom-scrollbar">
                     <p className="text-sm font-semibold text-yellow-800 mb-2">
                     Yesterday
                     </p>
@@ -80,17 +80,7 @@ export default function Drawer({chats, setChats}) {
                       ))}
                     </ul>
 
-                    {/* <p className="text-sm font-semibold text-yellow-800 mb-2">
-                    Last 7 Days
-                    </p>
-                    <ul className="space-y-1">
-                    {chats.last7days.map((c, i) => (
-                        <li key={i} className="cursor-pointer hover:text-yellow-900">
-                        {c}
-                        </li>
-                    ))}
-                    </ul> */}
-                </div>
+                  </div>
             </div>
 
             {/* Bottom user profile */}

@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;          /* Thin width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #FFD600;  /* Bright yellow (adjust if needed) */
+  border-radius: 1.5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;              /* For Firefox */
+  scrollbar-color: #FFD600 transparent;
+}

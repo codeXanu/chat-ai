@@ -3,7 +3,7 @@ import ReactMarkdown from "react-markdown";
 
 export default function ChatSection({ chats }) {
   return (
-    <div className="flex-1 w-full max-w-3xl flex flex-col space-y-4 overflow-y-auto p-4 ">
+    <div className="flex-1 w-full max-w-3xl flex flex-col space-y-4 overflow-y-auto p-4 custom-scrollbar">
       {chats.map((chat, idx) => (
         <div
           key={idx}
