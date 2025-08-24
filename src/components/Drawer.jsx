@@ -1,8 +1,20 @@
 import { useState, useEffect, useRef } from "react";
+import { createChatThread } from "../utils/createChatThread";
 
-export default function Drawer({chats, setChats}) {
+export default function Drawer({ chats, setChats }) {
   const [isOpen, setIsOpen] = useState(true);
   const drawerRef = useRef(null);
+
+  const [threads, setThreads] = useState([]);
+
+  function saveCurrentThreadAndClear() {
+  const newThread = createChatThread(chats);
+  if (newThread) {
+    setThreads(prev => [newThread, ...prev]); // add new thread to start of list
+    setChats([]); // clear current input
+  }
+}
+
 
   // Close drawer when clicking outside (mobile only)
   useEffect(() => {
@@ -27,6 +39,17 @@ export default function Drawer({chats, setChats}) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
+  function handleClearAndCreateThread() {
+    // const currentThread = createChatThread(chats);
+    saveCurrentThreadAndClear();
+    // setChats([]); // Clear chat state after creating thread
+    console.log("Thread title:", currentThread?.title);
+    console.log("Thread messages:", currentThread?.messages);
+     console.log("Thread timing:", currentThread?.createdAt);
+
+    // Here you can add code to save currentThread to your database if needed
+  }
+
   return (
     <div>
       {/* Toggle Button */}
@@ -44,62 +67,65 @@ export default function Drawer({chats, setChats}) {
         className={`fixed top-0 left-0 h-full w-64 bg-yellow-100 text-black p-4 shadow-xl transform transition-transform duration-300 ease-in-out z-40
           ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        
         <div className="flex flex-col h-full justify-between">
+          <div>
+            {/* Drawer header with toggle icon */}
+            <div className="flex items-center justify-between mb-4">
+              <h1 className="text-2xl font-bold text-yellow-700 ml-15 ">
+                Chat AI
+              </h1>
+            </div>
 
-        
+            <button
+              className="w-full bg-yellow-400 text-white py-2 px-3 rounded-xl mb-4 hover:bg-yellow-600 transition"
+              onClick={handleClearAndCreateThread}
+            >
+              New Chat
+            </button>
+
+            <div className="mb-6">
+              <input
+                type="text"
+                placeholder="Search your threads..."
+                className="w-full rounded-lg px-3 py-2 bg-yellow-100 focus:outline-none"
+              />
+            </div>
+
+            <div className=" overflow-y-auto max-h-[60vh] custom-scrollbar">
+              <p className="text-sm font-semibold text-yellow-800 mb-2">
+                Chat History
+              </p>
+              <ul className="mb-4 space-y-1">
+                {threads.map((thread, index) => (
+                  <li
+                    key={index}
+                    className="cursor-pointer hover:text-yellow-900 border-b border-yellow-200 py-2"
+                    // optional: onClick={() => loadThread(thread)} to load selected thread
+                  >
+                    <strong>{thread.title}</strong>
+                    <br />
+                    <small className="text-yellow-600 text-xs">{thread.createdAt}</small>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom user profile */}
+
+          <div className="flex items-center space-x-3">
+            <img
+              src="https://via.placeholder.com/40"
+              alt="profile"
+              className="w-10 h-10 rounded-full"
+            />
             <div>
-                {/* Drawer header with toggle icon */}
-                <div className="flex items-center justify-between mb-4">
-                    <h1 className="text-2xl font-bold text-yellow-700 ml-15 ">Chat AI</h1>
-                </div>
-
-                <button className="w-full bg-yellow-400 text-white py-2 px-3 rounded-xl mb-4 hover:bg-yellow-600 transition" 
-                  onClick={()=> setChats([])}
-                >
-                    New Chat
-                </button>
-
-                <div className="mb-6">
-                    <input
-                    type="text"
-                    placeholder="Search your threads..."
-                    className="w-full rounded-lg px-3 py-2 bg-yellow-100 focus:outline-none"
-                    />
-                </div>
-
-                  <div className=" overflow-y-auto max-h-[60vh] custom-scrollbar">
-                    <p className="text-sm font-semibold text-yellow-800 mb-2">
-                    Yesterday
-                    </p>
-                    <ul className="mb-4 space-y-1">
-                    {chats.map((chat, index) => (
-                        <li key={index} className="cursor-pointer hover:text-yellow-900">
-                          <strong>{chat.role === "user" ? "User" : "AI"}:</strong> {chat.content}
-                        </li>
-                      ))}
-                    </ul>
-
-                  </div>
+              <p className="font-semibold">Anuj Maurya</p>
+              <p className="text-sm text-gray-700">Free</p>
             </div>
-
-            {/* Bottom user profile */}
-            
-            <div className="flex items-center space-x-3">
-                <img
-                    src="https://via.placeholder.com/40"
-                    alt="profile"
-                    className="w-10 h-10 rounded-full"
-                />
-                <div>
-                    <p className="font-semibold">Anuj Maurya</p>
-                    <p className="text-sm text-gray-700">Free</p>
-                </div>
-            </div>
-    
+          </div>
         </div>
-
-        </div>
+      </div>
     </div>
   );
 }

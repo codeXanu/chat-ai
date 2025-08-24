@@ -4,6 +4,7 @@ import Drawer from "./components/Drawer";
 import CTASection from "./components/CTASection";
 import ChatSection from "./components/ChatSection";
 import ModelSelector from "./components/ModelSelector";
+import { createChatThread } from "./utils/createChatThread";
 import "./App.css";
 
 function App() {
