@@ -7,6 +7,7 @@ import ModelSelector from "./components/ModelSelector";
 import { auth, provider, signInWithPopup, signOut } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Login from "./components/Login.jsx";
+import { sendChatRequest } from "./utils/api.js";
 
 import "./App.css";
 
@@ -14,12 +15,18 @@ function App() {
   const [chats, setChats] = useState([]);
 
   const [input, setInput] = useState("");
+  console.log(input)
+  const [selectedProvider, setSelectedProvider] = useState();
+  const [aiResponse, setAiResponse] = useState("");
+  console.log(`Hello from AI ${aiResponse}`)
 
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -27,15 +34,30 @@ function App() {
   // console.log(user.photoURL)
  
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
-
     const newChats = [
       ...chats,
       { role: "user", content: input },
-      { role: "assistant", content: `**AI Response:** You said "${input}"` }, // mock AI reply
+      // { role: "assistant", content: `"${aiResponse}"` }, 
     ];
     setChats(newChats);
+
+    try {
+      const responseText = await sendChatRequest(input, selectedProvider);
+       if (!responseText) {
+      throw new Error("No data returned from API");
+    }
+    setChats(prev => [...prev, { role: "assistant", content: responseText }]);
+      console.log(responseText)
+      setAiResponse(responseText);
+      // You can also add this response to your chat messages state
+    } catch (error) {
+      console.error("Error in handleSend:", error);
+      alert("Error getting AI response: " + error.message);
+    }
+
+    
     setInput("");
   };
 
@@ -44,6 +66,17 @@ function App() {
   const handleModelChange = ({ provider, model }) => {
     console.log("Selected:", provider, model);
   };
+
+
+   if (loading) {
+    // Show a loading placeholder until auth state is known
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p>Loading Your App...</p>
+      </div>
+    );
+  }
+
 
 
   return (
@@ -86,7 +119,7 @@ function App() {
           />
 
           <div className="flex items-center gap-3 text-yellow-800">
-            <ModelSelector onChange={handleModelChange} />
+            <ModelSelector onChange={handleModelChange} setSelectedProvider={setSelectedProvider} />
 
             <button
               type="submit" // ✅ submit instead of onClick

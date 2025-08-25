@@ -3,6 +3,7 @@ import { createChatThread } from "../utils/createChatThread";
 import handleLogout from "../utils/handleLogout";
 
 export default function Drawer({ chats, setChats, user }) {
+  // console.log(user?.photoURL)
   const [isOpen, setIsOpen] = useState(true);
   const drawerRef = useRef(null);
 
@@ -124,7 +125,7 @@ export default function Drawer({ chats, setChats, user }) {
             <div>
               <div className="flex items-center space-x-3">
                 <img
-                  src={user?.photoURL || "https://via.placeholder.com/40"}
+                  src={user?.photoURL}
                   alt="profile"
                   className="w-10 h-10 rounded-full"
                 />

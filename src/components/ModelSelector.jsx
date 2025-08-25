@@ -1,5 +1,5 @@
 // DropdownMenu.jsx
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { ChevronUp, Eye, Star } from "lucide-react";
 
 const menuItems = [
@@ -14,9 +14,14 @@ const menuItems = [
     { provider: "anthropic", model: "claude-4-sonnet", name: "Claude 4 Sonnet", icon: <Eye className="w-4 h-4 text-green-400" /> },
 ];
 
-export default function ModelSelector() {
+export default function ModelSelector({setSelectedProvider}) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(menuItems[0]);
+  // console.log((selected))
+
+  useEffect(() => {
+    setSelectedProvider(selected)
+  },[selected]);
 
   const handleSelect = (item) => {
     if (item.disabled) return;
