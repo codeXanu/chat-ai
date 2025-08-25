@@ -6,32 +6,28 @@
  * @param {Array<{role: string, content: string}>} messages - Array of chat messages.
  * @returns {{ title: string, messages: Array }} thread object with title and messages.
  */
+// utils/createChatThread.js
 
-export function createChatThread(messages) {
+let threadIdCounter = 1;  // simple incrementing counter for thread ids
+
+export function createChatThread(messages, active = true) {
   if (!messages || messages.length === 0) {
     return null;
-    // return {
-    //   title: "Empty Thread",
-    //   messages: [],
-    // };
   }
 
-  // Find the first user message content to generate title
   const firstUserMessage = messages.find(msg => msg.role === "user")?.content || "Chat Thread";
 
-  // Extract first 5 to 8 words for title if message is long
   const wordArray = firstUserMessage.trim().split(/\s+/);
-  let title = "";
-
-  if (wordArray.length <= 8) {
-    title = firstUserMessage;
-  } else {
-    title = wordArray.slice(0, 8).join(" ") + "...";
-  }
+  const title = wordArray.length <= 8
+    ? firstUserMessage
+    : wordArray.slice(0, 8).join(" ") + "...";
 
   return {
+    id: threadIdCounter++,        // assign unique id
     title,
-    messages,
-    createdAt: new Date().toLocaleString(),  // ISO string of current time
+    messages: [...messages],      // copy messages array
+    createdAt: new Date().toLocaleString(),
+    active,                      // true if thread is still open for new messages
   };
 }
+

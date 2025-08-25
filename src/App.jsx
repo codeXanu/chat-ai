@@ -5,13 +5,16 @@ import CTASection from "./components/CTASection";
 import ChatSection from "./components/ChatSection";
 import ModelSelector from "./components/ModelSelector";
 import { createChatThread } from "./utils/createChatThread";
+import { addMessageToThread} from "./utils/addMessageToThread";
 import "./App.css";
 
 function App() {
   const [chats, setChats] = useState([]);
+
   const [input, setInput] = useState("");
 
   // console.log(input)
+
 
   const handleSend = () => {
     if (!input.trim()) return;

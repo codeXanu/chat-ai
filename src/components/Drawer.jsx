@@ -6,6 +6,7 @@ export default function Drawer({ chats, setChats }) {
   const drawerRef = useRef(null);
 
   const [threads, setThreads] = useState([]);
+  const [activeThreadId, setActiveThreadId] = useState(null);
 
   function saveCurrentThreadAndClear() {
   const newThread = createChatThread(chats);
@@ -49,6 +50,14 @@ export default function Drawer({ chats, setChats }) {
 
     // Here you can add code to save currentThread to your database if needed
   }
+
+
+  function loadThread(thread) {
+    setChats(thread.messages);
+    setActiveThreadId(thread.id); // optionally track which thread is open
+  }
+
+
 
   return (
     <div>
@@ -100,7 +109,7 @@ export default function Drawer({ chats, setChats }) {
                   <li
                     key={index}
                     className="cursor-pointer hover:text-yellow-900 border-b border-yellow-200 py-2"
-                    // optional: onClick={() => loadThread(thread)} to load selected thread
+                    onClick={() => loadThread(thread)}
                   >
                     <strong>{thread.title}</strong>
                     <br />
