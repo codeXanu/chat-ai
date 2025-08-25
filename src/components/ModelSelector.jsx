@@ -29,8 +29,8 @@ export default function ModelSelector({setSelectedProvider}) {
     setOpen(false);
 
     // 🔑 Here you can use selected provider + model
-    console.log("Selected Provider:", selected.provider);
-    console.log("Selected Model:", selected.model);
+    // console.log("Selected Provider:", selected.provider);
+    // console.log("Selected Model:", selected.model);
   };
 
 //   console.log("Selected Provider:", selected.provider);

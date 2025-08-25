@@ -45,9 +45,9 @@ export default function Drawer({ chats, setChats, user }) {
     // const currentThread = createChatThread(chats);
     saveCurrentThreadAndClear();
     // setChats([]); // Clear chat state after creating thread
-    console.log("Thread title:", currentThread?.title);
-    console.log("Thread messages:", currentThread?.messages);
-    console.log("Thread timing:", currentThread?.createdAt);
+    // console.log("Thread title:", currentThread?.title);
+    // console.log("Thread messages:", currentThread?.messages);
+    // console.log("Thread timing:", currentThread?.createdAt);
 
     // Here you can add code to save currentThread to your database if needed
   }

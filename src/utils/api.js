@@ -1,7 +1,6 @@
 export async function sendChatRequest(input, selectedProvider) {
-    console.log(`hello ${selectedProvider.model}`)
   try {
-    const response = await fetch("http://localhost:8000/api/chat", {
+    const response = await fetch("https://chat-ai-app-8gi3g.ondigitalocean.app/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
