@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiSearch, FiPaperclip, FiSend } from "react-icons/fi";
 import Drawer from "./components/Drawer";
 import CTASection from "./components/CTASection";
 import ChatSection from "./components/ChatSection";
 import ModelSelector from "./components/ModelSelector";
-import { createChatThread } from "./utils/createChatThread";
-import { addMessageToThread} from "./utils/addMessageToThread";
+import { auth, provider, signInWithPopup, signOut } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import Login from "./components/Login.jsx";
+
 import "./App.css";
 
 function App() {
@@ -13,8 +15,17 @@ function App() {
 
   const [input, setInput] = useState("");
 
-  // console.log(input)
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // console.log(user.photoURL)
+ 
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -37,15 +48,17 @@ function App() {
 
   return (
     <main className="flex-1 flex flex-col h-screen justify-between items-center p-8">
-      <Drawer chats={chats} setChats={setChats} />
+      <Drawer chats={chats} setChats={setChats} user = {user} />
 
       {/* Show CTA if no chats, otherwise ChatSection */}
-      {chats.length === 0 && input === "" ? (
-        <CTASection
-          onSelectQuestion={(q) => setInput(q)}
-        />
-      ) : (
-        <ChatSection chats={chats} />
+      {user ? (
+        chats.length === 0 && input === "" ? (
+          <CTASection onSelectQuestion={(q) => setInput(q)} />
+        ) : (
+          <ChatSection chats={chats} />
+        )
+        ) : (
+          <Login setUser={setUser} />
       )}
 
       {/* Chat Input */}

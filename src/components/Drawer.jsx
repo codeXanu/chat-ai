@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { createChatThread } from "../utils/createChatThread";
+import handleLogout from "../utils/handleLogout";
 
-export default function Drawer({ chats, setChats }) {
+export default function Drawer({ chats, setChats, user }) {
   const [isOpen, setIsOpen] = useState(true);
   const drawerRef = useRef(null);
 
@@ -9,13 +10,12 @@ export default function Drawer({ chats, setChats }) {
   const [activeThreadId, setActiveThreadId] = useState(null);
 
   function saveCurrentThreadAndClear() {
-  const newThread = createChatThread(chats);
-  if (newThread) {
-    setThreads(prev => [newThread, ...prev]); // add new thread to start of list
-    setChats([]); // clear current input
+    const newThread = createChatThread(chats);
+    if (newThread) {
+      setThreads((prev) => [newThread, ...prev]); // add new thread to start of list
+      setChats([]); // clear current input
+    }
   }
-}
-
 
   // Close drawer when clicking outside (mobile only)
   useEffect(() => {
@@ -46,18 +46,15 @@ export default function Drawer({ chats, setChats }) {
     // setChats([]); // Clear chat state after creating thread
     console.log("Thread title:", currentThread?.title);
     console.log("Thread messages:", currentThread?.messages);
-     console.log("Thread timing:", currentThread?.createdAt);
+    console.log("Thread timing:", currentThread?.createdAt);
 
     // Here you can add code to save currentThread to your database if needed
   }
-
 
   function loadThread(thread) {
     setChats(thread.messages);
     setActiveThreadId(thread.id); // optionally track which thread is open
   }
-
-
 
   return (
     <div>
@@ -113,7 +110,9 @@ export default function Drawer({ chats, setChats }) {
                   >
                     <strong>{thread.title}</strong>
                     <br />
-                    <small className="text-yellow-600 text-xs">{thread.createdAt}</small>
+                    <small className="text-yellow-600 text-xs">
+                      {thread.createdAt}
+                    </small>
                   </li>
                 ))}
               </ul>
@@ -121,18 +120,28 @@ export default function Drawer({ chats, setChats }) {
           </div>
 
           {/* Bottom user profile */}
-
-          <div className="flex items-center space-x-3">
-            <img
-              src="https://via.placeholder.com/40"
-              alt="profile"
-              className="w-10 h-10 rounded-full"
-            />
+          {user && (
             <div>
-              <p className="font-semibold">Anuj Maurya</p>
-              <p className="text-sm text-gray-700">Free</p>
+              <div className="flex items-center space-x-3">
+                <img
+                  src={user?.photoURL || "https://via.placeholder.com/40"}
+                  alt="profile"
+                  className="w-10 h-10 rounded-full"
+                />
+                <div>
+                  <p className="font-semibold">{user?.displayName || "User"}</p>
+                  <p className="text-sm text-gray-700">Free</p>
+                </div>
+              </div>
+              <div
+                onClick={handleLogout}
+                className="bg-red-500 text-white text-center px-2 py-1 mt-3 rounded-lg cursor-pointer 
+                 hover:bg-red-600 active:bg-red-700 transition-colors duration-200"
+              >
+                Logout
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
