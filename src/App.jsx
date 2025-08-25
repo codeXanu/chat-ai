@@ -99,7 +99,7 @@ function App() {
       {/* Show CTA if no chats, otherwise ChatSection */}
       {user ? (
         chats.length === 0 && input === "" ? (
-          <CTASection onSelectQuestion={(q) => setInput(q)} />
+          <CTASection onSelectQuestion={(q) => setInput(q)} user = {user} />
         ) : (
           <ChatSection chats={chats} />
         )

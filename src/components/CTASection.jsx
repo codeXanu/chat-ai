@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function CTASection({ onSelectQuestion }) {
+export default function CTASection({ onSelectQuestion , user}) {
   return (
     <div className="flex-1 flex flex-col justify-center items-center">
       <h2 className="text-2xl font-bold mb-6">
-        How can I help you, Anuj?
+       {` How can I help you, ${user.displayName} ?`}
       </h2>
 
       {/* Action buttons */}
