@@ -101,7 +101,7 @@ function App() {
         chats.length === 0 && input === "" ? (
           <CTASection onSelectQuestion={(q) => setInput(q)} user = {user} />
         ) : (
-          <ChatSection chats={chats} />
+          <ChatSection chats={chats} chatLoading = {chatLoading} />
         )
         ) : (
           <Login setUser={setUser} />

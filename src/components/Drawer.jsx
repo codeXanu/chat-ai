@@ -63,9 +63,9 @@ export default function Drawer({ chats, setChats, user }) {
       <button
         id="drawer-toggle"
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-50 p-2 bg-yellow-400 text-white rounded-md"
+        className="fixed top-4 left-4 z-50 p-2 pl-3 pr-3 bg-yellow-400 text-white rounded-md"
       >
-        {isOpen ? "✖" : " ≡ "}
+        {isOpen ? "X" : " ≡ "}
       </button>
 
       {/* Drawer */}

@@ -2,7 +2,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Copy , Check} from "lucide-react"; 
 
-export default function ChatSection({ chats }) {
+export default function ChatSection({ chats, chatLoading }) {
 
    const [copiedIndex, setCopiedIndex] = React.useState(null);
 
@@ -35,6 +35,8 @@ export default function ChatSection({ chats }) {
               <>
                 <ReactMarkdown>{chat.content}</ReactMarkdown>
                 {/* Copy button only for assistant messages */}
+                {!chatLoading 
+                ? 
                 <div className="flex justify-end mt-2">
                   <button
                     onClick={() => handleCopy(chat.content, idx)}
@@ -45,9 +47,24 @@ export default function ChatSection({ chats }) {
                     
                   </button>
                 </div>
+                :
+                null
+                }
               </>
             ) : (
-              chat.content
+              <>
+              {chat.content}
+              <div className="flex justify-end mt-2">
+                  <button
+                    onClick={() => handleCopy(chat.content, idx)}
+                    className="p-1 rounded hover:bg-yellow-400 transition flex items-center gap-1 text-sm"
+                    title="Copy"
+                  >
+                    {copiedIndex === idx ? <Check size={16} />: <Copy size={16} /> }
+                    
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>
