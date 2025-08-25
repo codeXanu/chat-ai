@@ -15,13 +15,14 @@ function App() {
   const [chats, setChats] = useState([]);
 
   const [input, setInput] = useState("");
-  console.log(input)
+  // console.log(input)
   const [selectedProvider, setSelectedProvider] = useState();
   const [aiResponse, setAiResponse] = useState("");
-  console.log(`Hello from AI ${aiResponse}`)
+  // console.log(`Hello from AI ${aiResponse}`)
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [chatLoading, setChatLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -36,29 +37,41 @@ function App() {
 
   const handleSend = async () => {
     if (!input.trim()) return;
+    setInput("");
     const newChats = [
       ...chats,
       { role: "user", content: input },
+      { role: "assistant", content: "Writing...", isLoading: true },
       // { role: "assistant", content: `"${aiResponse}"` }, 
     ];
     setChats(newChats);
-
+    setChatLoading(true);
+    
     try {
       const responseText = await sendChatRequest(input, selectedProvider);
        if (!responseText) {
       throw new Error("No data returned from API");
     }
-    setChats(prev => [...prev, { role: "assistant", content: responseText }]);
-      console.log(responseText)
+    // setChats(prev => [...prev, { role: "assistant", content: responseText }]);
+    setChats((prevChats) =>
+      prevChats.map((chat, i) =>
+        chat.isLoading
+          ? { role: "assistant", content: responseText }
+          : chat
+      )
+    );
+      // console.log(responseText)
       setAiResponse(responseText);
       // You can also add this response to your chat messages state
     } catch (error) {
       console.error("Error in handleSend:", error);
       alert("Error getting AI response: " + error.message);
+    } finally {
+      setChatLoading(false);
     }
 
     
-    setInput("");
+    
   };
 
   // for selecting model

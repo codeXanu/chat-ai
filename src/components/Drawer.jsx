@@ -90,13 +90,6 @@ export default function Drawer({ chats, setChats, user }) {
               New Chat
             </button>
 
-            <div className="mb-6">
-              <input
-                type="text"
-                placeholder="Search your threads..."
-                className="w-full rounded-lg px-3 py-2 bg-yellow-100 focus:outline-none"
-              />
-            </div>
 
             <div className=" overflow-y-auto max-h-[60vh] custom-scrollbar">
               <p className="text-sm font-semibold text-yellow-800 mb-2">
