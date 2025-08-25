@@ -132,7 +132,7 @@ function App() {
           />
 
           <div className="flex items-center gap-3 text-yellow-800">
-            <ModelSelector onChange={handleModelChange} setSelectedProvider={setSelectedProvider} />
+            <ModelSelector setSelectedProvider={setSelectedProvider} />
 
             <button
               type="submit" // ✅ submit instead of onClick

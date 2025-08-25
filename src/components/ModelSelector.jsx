@@ -39,6 +39,7 @@ export default function ModelSelector({setSelectedProvider}) {
     <div className="relative inline-block text-left">
       {/* Button */}
       <button
+        type="button"
         onClick={() => setOpen(!open)}
         className="px-4 py-2 bg-amber-300 text-grey-700 rounded-xl flex items-center gap-2 hover:bg-amber-400 transition"
       >
