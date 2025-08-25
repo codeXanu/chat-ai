@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { createChatThread } from "../utils/createChatThread";
 import handleLogout from "../utils/handleLogout";
 
-export default function Drawer({ chats, setChats, user }) {
+export default function Drawer({ chats, setChats, user, isOpen, setIsOpen }) {
   // console.log(user?.photoURL)
-  const [isOpen, setIsOpen] = useState(true);
+  
   const drawerRef = useRef(null);
 
   const [threads, setThreads] = useState([]);

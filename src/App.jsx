@@ -24,6 +24,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [chatLoading, setChatLoading] = useState(false);
 
+  const [isOpen, setIsOpen] = useState(true);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -93,8 +95,9 @@ function App() {
 
 
   return (
-    <main className="flex-1 flex flex-col h-screen justify-between items-center p-8">
-      <Drawer chats={chats} setChats={setChats} user = {user} />
+    <main className={`flex-1 flex flex-col h-screen justify-between items-center p-8 transition-all duration-300 ease-in-out
+      ${isOpen ? "ml-64" : "ml-0"}`}>
+      <Drawer chats={chats} setChats={setChats} user = {user} isOpen={isOpen} setIsOpen={setIsOpen} />
 
       {/* Show CTA if no chats, otherwise ChatSection */}
       {user ? (
