@@ -95,20 +95,24 @@ function App() {
 
 
   return (
+    <>
+    {
+      user ?
+    
+    
     <main className={`flex-1 flex flex-col h-screen justify-between items-center p-8 transition-all duration-300 ease-in-out
       ${isOpen ? "ml-64" : "ml-0"}`}>
       <Drawer chats={chats} setChats={setChats} user = {user} isOpen={isOpen} setIsOpen={setIsOpen} />
 
       {/* Show CTA if no chats, otherwise ChatSection */}
-      {user ? (
+      {
         chats.length === 0 && input === "" ? (
           <CTASection onSelectQuestion={(q) => setInput(q)} user = {user} />
         ) : (
           <ChatSection chats={chats} chatLoading = {chatLoading} />
         )
-        ) : (
-          <Login setUser={setUser} />
-      )}
+         
+      }
 
       {/* Chat Input */}
       <div className="w-full max-w-3xl flex flex-col sm:flex-row items-center  bg-yellow-100 rounded-xl px-2 py-2 sm:px-4 sm:py-3 mt-4">
@@ -147,6 +151,10 @@ function App() {
         </form>
       </div>
     </main>
+    : 
+    <Login setUser={setUser} />
+    }
+    </>
     
   );
 }
