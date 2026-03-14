@@ -1,6 +1,6 @@
 export async function sendChatRequest(input, selectedProvider) {
   try {
-    const response = await fetch("https://chat-ai-app-8gi3g.ondigitalocean.app/api/chat", {
+    const response = await fetch("https://chat-ai-server-62oi8.ondigitalocean.app/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
